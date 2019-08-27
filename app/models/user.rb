@@ -1,11 +1,23 @@
 class User < ApplicationRecord
   include Clearance::User
 
+  validates :username, presence: true, uniqueness: true
+
   has_many :shouts, dependent: :destroy
   has_many :likes 
   has_many :liked_shouts, through: :likes, source: :shout
+
+  has_many :following_relationships, foreign_key: :follower_id
+  has_many :followed_users, through: :following_relationships
   
-  validates :username, presence: true, uniqueness: true
+
+  def follow(user)
+    followed_users << user
+  end
+
+  def following?(user)
+    followed_user_ids.include?(user.id)
+  end
 
   def like(shout)
     liked_shouts << shout
@@ -22,4 +34,5 @@ class User < ApplicationRecord
   def to_param
     username
   end
+
 end
