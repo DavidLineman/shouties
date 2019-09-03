@@ -1,11 +1,12 @@
 class Timeline
 
-  def initialize(users)
+  def initialize(users, scope = Shout)
     @users = users
+    @scope = scope
   end
 
   def shouts
-    Shout.
+    scope.
       where(user_id: @users).
       order(created_at: :desc)
   end
@@ -16,6 +17,6 @@ class Timeline
 
   private
 
-  attr_reader :user
+  attr_reader :user. :scope
 
 end
