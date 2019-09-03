@@ -17,6 +17,6 @@ class Timeline
 
   private
 
-  attr_reader :user. :scope
+  attr_reader :user, :scope
 
 end
